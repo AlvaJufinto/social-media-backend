@@ -1,9 +1,16 @@
 const mongoose = require("mongoose");
 const {Schema,model} = mongoose
 
-const PostModel = model({
+const PostModel = Schema({
     image : {
-        type  : String
+        imageUrl : {
+            type : String,
+            required : true
+        },
+        imageID : {
+            type : String,
+            required : true
+        }
     },
     description : {
         type : String,
@@ -12,7 +19,7 @@ const PostModel = model({
     comments : [
         {
             type : mongoose.Types.ObjectId,
-            ref : "user"
+            ref : "comment"
         }
     ],
     likes : [
@@ -22,3 +29,6 @@ const PostModel = model({
         }
     ]
 })
+
+
+module.exports = model("post",PostModel);
