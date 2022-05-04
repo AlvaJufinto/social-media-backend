@@ -6,23 +6,25 @@ const path = require("path");
 function CustomMemoryStorage (opts) {}
 
 CustomMemoryStorage.prototype._handleFile = function _handleFile (req, file, cb) {
-
-    file.stream.pipe(concat(async function (buffer) {       
-        let parser = new DatauriParser();
-        
-        let uriFile = parser.format(path.extname(file.originalname).toString(),buffer);
-        return await cloudinary.uploader.upload(uriFile.content, function(error,result){
-            return cb(null, {
-                public_id : result.public_id,
-                secure_url : result.secure_url
+    file.stream.pipe(concat(async function (buffer) {      
+        const fileSize = buffer.byteLength / (1024*1024)
+        if(fileSize < 5){
+            let parser = new DatauriParser();
+            let uriFile = parser.format(path.extname(file.originalname).toString(),buffer);
+    
+            return await cloudinary.uploader.upload(uriFile.content, function(error,result){
+                return cb(null, {
+                    public_id : result.public_id,
+                    secure_url : result.secure_url
+                })
             })
-        })
+        }
+        return cb(new Error("FTL"))
 
     }))
 }
 
 CustomMemoryStorage.prototype._removeFile = function _removeFile (req, file, cb) {
-
     delete file.buffer
     cb(null)
 }
