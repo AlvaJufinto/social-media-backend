@@ -6,17 +6,27 @@ require("dotenv").config();
 const UserModel = Schema({
     username : {
         type : String,
-        required : true,
-        unique : true
+        required : [true,"Field needs to be filled"],
+        unique : [true, "Username must unique"]
+    },
+    fullname : {
+        type : String,
+        required : [true,"Field needs to be filled"],
+    },
+    email : {
+        type : String,
+        required : [true,"Field needs to be filled"],
+        unique : [true, "email must unique"]
     },
     password : {
         type : String,
-        required : true,
+        required : [true,"Field needs to be filled"],
         minLength : 8
     },
     detail : {
         type : mongoose.Types.ObjectId,
-        ref : "Detail"
+        ref : "Detail",
+        required : [true,"Field needs to be filled"]
     },
     post : [
         {
