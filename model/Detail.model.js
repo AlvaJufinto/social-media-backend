@@ -4,6 +4,7 @@ const {Schema,model} = mongoose;
 const DetailSchema = Schema({
     belongsto : {
         type : mongoose.Types.ObjectId,
+        ref : "User"
     },
     profilePict : {
         imageUrl : {

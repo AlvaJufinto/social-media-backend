@@ -25,7 +25,7 @@ const UserModel = Schema({
     },
     detail : {
         type : mongoose.Types.ObjectId,
-        ref : "Detail",
+        ref : "detail",
         required : [true,"Field needs to be filled"]
     },
     post : [

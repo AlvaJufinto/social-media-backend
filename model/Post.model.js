@@ -2,14 +2,20 @@ const mongoose = require("mongoose");
 const {Schema,model} = mongoose
 
 const PostModel = Schema({
+    belongsto : {
+        type : mongoose.Types.ObjectId,
+        required : true,
+        ref : "User"
+    },
     image : {
         imageUrl : {
             type : String,
-            required : true
+            required : true,
+            default : "defaultimage.jpg"
         },
         imageID : {
             type : String,
-            required : true
+            required : "defaultimage.jpg"
         }
     },
     description : {
