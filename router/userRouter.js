@@ -7,5 +7,6 @@ upload = multer();
 
 router.get("/me", authMiddleware.authenticated, userController.me);
 router.post("/addpost",authMiddleware.authenticated,upload.single("gambar") ,userController.addPost);
+router.delete("/deletepost/:postId", authMiddleware.authenticated, authMiddleware.authorized, userController.deletepost);
 
 module.exports = router;

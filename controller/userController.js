@@ -1,6 +1,7 @@
 const DetailModel = require("../model/Detail.model");
 const PostModel = require("../model/Post.model");
 const UserModel = require("../model/User.model");
+const {errorHandler} = require("../utils/errorHandling");
 
 exports.me = async (req,res) => {
     try{
@@ -57,10 +58,29 @@ exports.addPost = async (req,res) => {
         })
         
     }catch(e){
-        console.log(e);
-        return res.status(501).json({
+        const error = errorHandler(e);
+        return res.status(error.code).json(error.errorData);
+    }
+}
+
+
+exports.deletepost = async (req,res) => {
+    try{
+        const {_id} = req.requestedPost;
+        const deletePost = await PostModel.remove({_id : _id});
+        if(deletePost.deletedCount != 0){
+            return res.status(200).json({
+                ok : true,
+                message : "data deleted"
+            })
+        }
+        return res.status(200).json({
             ok : false,
-            message : "Internal Error"
+            name : "failed",
+            message: "Failed to delete data"
         })
+    }catch(e){
+        const error = errorHandler(e);
+        return res.status(error.code).json(error.errorData);
     }
 }
