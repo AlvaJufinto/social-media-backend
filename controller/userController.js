@@ -56,7 +56,7 @@ exports.addPost = async (req,res) => {
             message : "Data Added",
             data : createPost
         })
-        
+
     }catch(e){
         const error = errorHandler(e);
         return res.status(error.code).json(error.errorData);
