@@ -66,9 +66,13 @@ exports.addPost = async (req,res) => {
 
 exports.deletepost = async (req,res) => {
     try{
+        const {uid} = req.uid;
         const {_id} = req.requestedPost;
-        const deletePost = await PostModel.remove({_id : _id});
+        const deletePost = await PostModel.deleteOne({_id : _id});
         if(deletePost.deletedCount != 0){
+            await UserModel.updateOne({_id : uid},{
+                $pull : {post : _id}
+            })
             return res.status(200).json({
                 ok : true,
                 message : "data deleted"

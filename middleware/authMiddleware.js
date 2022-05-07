@@ -53,7 +53,7 @@ exports.authorized = async (req,res,next) => {
         const {postId} = req.params;
         const requestedPost = await PostModel.findById(postId);
         if(requestedPost){
-            console.log(requestedPost.belongsto,uid)
+
             if(requestedPost.belongsto == uid){
                 req.requestedPost = requestedPost;
                 return next();
