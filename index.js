@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const authRouter = require("./router/authRouter");
 const userRouter = require("./router/userRouter");
+const interactRouter = require("./router/interactRouter");
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(bodyParser.urlencoded({
 
 app.use("/api/auth",authRouter);
 app.use("/api/user",userRouter);
+app.use("/api/interact",interactRouter);
 
 mongoose.connect(process.env.MONGODB)
     .then((val)=>{
