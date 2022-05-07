@@ -28,3 +28,39 @@ exports.me = async (req,res) => {
         })
     }
 }
+
+exports.addPost = async (req,res) => {
+    try{
+        const {uid} = req.uid;
+        const {description} = req.body;
+        const {public_id,secure_url} = req.file || {};
+        const createPost = PostModel({
+            belongsto : uid,
+            image : {
+                imageUrl : secure_url,
+                imageID : public_id
+            },
+            description : description,
+            comments : [],
+            likes : []
+
+        })
+        await createPost.save();
+        await UserModel.updateOne({_id : uid},{
+            $push : {post : [createPost._id]}
+        });
+
+        return res.status(200).json({
+            ok : true,
+            message : "Data Added",
+            data : createPost
+        })
+        
+    }catch(e){
+        console.log(e);
+        return res.status(501).json({
+            ok : false,
+            message : "Internal Error"
+        })
+    }
+}

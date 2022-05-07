@@ -10,12 +10,11 @@ const PostModel = Schema({
     image : {
         imageUrl : {
             type : String,
-            required : true,
             default : "defaultimage.jpg"
         },
         imageID : {
             type : String,
-            required : "defaultimage.jpg"
+            default : "defaultimage.jpg"
         }
     },
     description : {
