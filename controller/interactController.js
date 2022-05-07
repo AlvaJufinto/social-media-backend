@@ -1,3 +1,4 @@
+const CommentModel = require("../model/Comment.model");
 const PostModel = require("../model/Post.model");
 const UserModel = require("../model/User.model");
 const {errorHandler} = require("../utils/errorHandling");
@@ -141,6 +142,40 @@ exports.unfollowUser = async (req,res) => {
         return res.status(403).json({
             ok : true,
             message : "cant unfollow yourself"
+        })
+    }catch(e){
+        const errorState = errorHandler(e);
+        return res.status(errorState.code).json(errorState.errorData);
+    }
+}
+
+
+exports.comment = async (req,res) => {
+    try{
+        const {uid} = req.uid;
+        const {postId} = req.params;
+        const {comment} = req.body;
+        const requestedPost = await PostModel.findById(postId);
+        if(requestedPost){
+            const createComment = CommentModel({
+                postID : requestedPost._id,
+                belongsto : uid,
+                comment : comment
+            })
+
+            requestedPost.comments.push(createComment._id);
+            await createComment.save();
+            await requestedPost.save();
+
+            return res.status(200).json({
+                ok : true,
+                message : "comment added",
+                data : createComment
+            })
+        }
+        return res.status(403).json({
+            ok : true,
+            message : "data not found"
         })
     }catch(e){
         const errorState = errorHandler(e);

@@ -7,6 +7,7 @@ router.put("/like/:postId", authMiddleware.authenticated, interactController.lik
 router.put("/unlike/:postId", authMiddleware.authenticated, interactController.unlikePost);
 router.put("/follow/:userId", authMiddleware.authenticated, interactController.followUser);
 router.put("/unfollow/:userId", authMiddleware.authenticated, interactController.unfollowUser);
+router.put("/comment/:postId", authMiddleware.authenticated, interactController.comment);
 
 
 module.exports = router;
