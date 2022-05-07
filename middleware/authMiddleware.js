@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const PostModel = require("../model/Post.model");
 require("dotenv").config();
 
 exports.authenticated = async (req,res,next) => {
@@ -42,6 +43,33 @@ exports.authenticated = async (req,res,next) => {
         return res.status(501).json({
             ok : false,
             message : "Internal Error"
+        })
+    }
+}
+
+exports.authorized = async (req,res,next) => {
+    try{
+        const {uid} = req.uid;
+        const {postId} = req.params;
+        const requestedPost = await PostModel.findById(postId);
+        if(requestedPost){
+            if(requestedPost.belongsto === uid){
+                req.requestedPost = requestedPost;
+                return next();
+            }
+            return res.status(401).json({
+                ok : true,
+                message : "Access Denied"
+            })
+        }
+        return res.status(401).json({
+            ok : false,
+            message : "data not found"
+        })
+    }catch(e){
+        return res.status(501).json({
+            ok : false,
+            message : "internal error"
         })
     }
 }

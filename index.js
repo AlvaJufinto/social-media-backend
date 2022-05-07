@@ -4,17 +4,18 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const authRouter = require("./router/authRouter");
+const userRouter = require("./router/userRouter");
 
 const app = express();
 
-app.use(express.json());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended : true
 }))
 
 
-app.use("/api/auth",authRouter)
-
+app.use("/api/auth",authRouter);
+app.use("/api/user",userRouter);
 
 mongoose.connect(process.env.MONGODB)
     .then((val)=>{
@@ -27,6 +28,5 @@ mongoose.connect(process.env.MONGODB)
         console.log(err);
         console.log("an error occurred");
     });
-
 
 
