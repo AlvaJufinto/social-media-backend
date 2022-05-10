@@ -1,18 +1,24 @@
 const bcrypt = require("bcrypt");
 const UserModel = require("../model/User.model");
 const DetailModel = require("../model/Detail.model");
+const {errorHandler} = require("../utils/errorHandling");
 
 exports.authSignup = async (req,res) => {
     try{
         const {
             username,fullname,email,password
         } = req.body;
+        const {public_id,secure_url} = req.file || {};
 
         const createUser = UserModel({
             username : username,
             password : await bcrypt.hash(password,11),
             fullname : fullname,
             email : email,
+            profilePict : {
+                imageUrl : secure_url,
+                imageID : public_id
+            },
             post : [],
             followings : [],
             followers : []
@@ -41,11 +47,8 @@ exports.authSignup = async (req,res) => {
             smtoken : smtoken
         })
     }catch(e){
-        console.log(e);
-        return res.status(501).json({
-            ok : false,
-            message : "internal Error"
-        })
+        const errorState = errorHandler(e);
+        return res.status(errorState.code).json(errorState.errorData);
     }
 }
 
@@ -57,6 +60,7 @@ exports.authLogin = async (req,res) => {
 
         if(user){
             isPasswordSame = await bcrypt.compare(password,user.password);
+            const smtoken = await user.createAccessToken();
 
             if(isPasswordSame){
                 return res.status(200).json({
@@ -64,8 +68,6 @@ exports.authLogin = async (req,res) => {
                     smtoken : smtoken
                 })
             }else{
-                const smtoken = await user.createAccessToken();
-
                 if(!smtoken){
                     return res.status(501).json({
                         ok : false,
