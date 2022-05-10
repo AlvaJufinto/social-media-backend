@@ -42,3 +42,19 @@ exports.errorHandler = (errorMessage) => {
             }
     }
 }
+
+exports.publicUserParser = (userDetail) => {
+    const {profilePict,username,fullname} = userDetail
+    return {
+        profilePict : profilePict,
+        username : username,
+        fullname,fullname
+    }
+}
+
+exports.publicPostParser = (postDetail) => {
+    const {image,description,comments,likes} = postDetail;
+    return {
+        image,description,comments,likes
+    }
+}
