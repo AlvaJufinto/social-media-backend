@@ -1,7 +1,7 @@
 const DetailModel = require("../model/Detail.model");
 const PostModel = require("../model/Post.model");
 const UserModel = require("../model/User.model");
-const {errorHandler} = require("../utils/errorHandling");
+const {errorHandler} = require("../utils/utils");
 
 exports.me = async (req,res) => {
     try{

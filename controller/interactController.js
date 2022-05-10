@@ -1,7 +1,7 @@
 const CommentModel = require("../model/Comment.model");
 const PostModel = require("../model/Post.model");
 const UserModel = require("../model/User.model");
-const {errorHandler} = require("../utils/errorHandling");
+const {errorHandler} = require("../utils/utils");
 
 exports.likePost = async (req,res) => {
     try{
