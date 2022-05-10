@@ -22,11 +22,8 @@ exports.me = async (req,res) => {
             }
         })
     }catch(e){
-        console.log(e);
-        return res.status(501).json({
-            ok : false,
-            message : "internal error"
-        })
+        const errorState = errorHandler(e);
+        return res.status(errorState.code).json(errorState.errorData);
     }
 }
 

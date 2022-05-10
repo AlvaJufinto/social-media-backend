@@ -87,10 +87,7 @@ exports.authLogin = async (req,res) => {
             message : "username not found"
         })
     }catch(e){
-        console.log(e);
-        return res.status(501).json({
-            ok : false,
-            message : "Internal Error"
-        })
+        const errorState = errorHandler(e);
+        return res.status(errorState.code).json(errorState.errorData);
     }
 }

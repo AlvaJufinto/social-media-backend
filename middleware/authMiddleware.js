@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const PostModel = require("../model/Post.model");
+const {errorHandler} = require("../utils/utils");
 require("dotenv").config();
 
 exports.authenticated = async (req,res,next) => {
@@ -39,11 +40,8 @@ exports.authenticated = async (req,res,next) => {
         })
 
     }catch(e){
-        console.log(e);
-        return res.status(501).json({
-            ok : false,
-            message : "Internal Error"
-        })
+        const errorState = errorHandler(e);
+        return res.status(errorState.code).json(errorState.errorData);
     }
 }
 
@@ -68,9 +66,7 @@ exports.authorized = async (req,res,next) => {
             message : "data not found"
         })
     }catch(e){
-        return res.status(501).json({
-            ok : false,
-            message : "internal error"
-        })
+        const errorState = errorHandler(e);
+        return res.status(errorState.code).json(errorState.errorData);
     }
 }
