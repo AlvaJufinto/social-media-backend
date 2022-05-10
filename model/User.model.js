@@ -9,6 +9,11 @@ const UserModel = Schema({
         required : [true,"Field needs to be filled"],
         unique : [true, "Username must unique"]
     },
+    password : {
+        type : String,
+        required : [true,"Field needs to be filled"],
+        minLength : 8
+    },
     fullname : {
         type : String,
         required : [true,"Field needs to be filled"],
@@ -17,11 +22,6 @@ const UserModel = Schema({
         type : String,
         required : [true,"Field needs to be filled"],
         unique : [true, "email must unique"]
-    },
-    password : {
-        type : String,
-        required : [true,"Field needs to be filled"],
-        minLength : 8
     },
     detail : {
         type : mongoose.Types.ObjectId,
@@ -34,6 +34,30 @@ const UserModel = Schema({
             ref : "post"
         }
     ],
+    profilePict : {
+        imageUrl : {
+            type : String,
+            required : true,
+            default : "zamndaniel"
+        },
+        imageID : {
+            type : String,
+            required : true,
+            default : "zamndaniel"
+        }
+    },
+    backgroundPict : {
+        imageUrl : {
+            type : String,
+            required : true,
+            default : "zamndaniel"
+        },
+        imageID : {
+            type : String,
+            required : true,
+            default : "zamndaniel"
+        }
+    },
     followings : [
         {
             type : mongoose.Types.ObjectId,

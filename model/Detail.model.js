@@ -6,30 +6,6 @@ const DetailSchema = Schema({
         type : mongoose.Types.ObjectId,
         ref : "User"
     },
-    profilePict : {
-        imageUrl : {
-            type : String,
-            required : true,
-            default : "zamndaniel"
-        },
-        imageID : {
-            type : String,
-            required : true,
-            default : "zamndaniel"
-        }
-    },
-    BackgroundPict : {
-        imageUrl : {
-            type : String,
-            required : true,
-            default : "zamndaniel"
-        },
-        imageID : {
-            type : String,
-            required : true,
-            default : "zamndaniel"
-        }
-    },
     from : {
         type : String
     },
