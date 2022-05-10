@@ -11,6 +11,27 @@ exports.errorHandler = (errorMessage) => {
                     message : errorMessage?.message || "validation error"
                 }
             }
+        case "MongoServerError":
+            switch(errorMessage.code){
+                case 11000:
+                    let keyValue = Object.keys(errorMessage.keyValue);
+                    return {
+                        code : 403,
+                        errorData : {
+                            ok : false,
+                            name : errorMessage.name,
+                            message : `there ${keyValue.length > 1 ? "are" : "is"} duplicate in ${keyValue.join(",")}`
+                        }
+                    }
+                default:
+                    return {
+                        code : 501,
+                        errorData : {
+                            ok : false,
+                            message : "Internal Error"
+                        }
+                    }
+            }
         default:
             return {
                 code : 501,
