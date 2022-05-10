@@ -32,6 +32,15 @@ exports.errorHandler = (errorMessage) => {
                         }
                     }
             }
+        case "CastError":
+            return {
+                code : 403,
+                errorData : {
+                    ok : false,
+                    name : errorMessage.name,
+                    messgae : "request not valid"
+                }
+            }
         default:
             return {
                 code : 501,
@@ -46,15 +55,17 @@ exports.errorHandler = (errorMessage) => {
 exports.publicUserParser = (userDetail) => {
     const {profilePict,username,fullname} = userDetail
     return {
-        profilePict : profilePict,
-        username : username,
-        fullname,fullname
+        profilePict,
+        username,
+        fullname,
     }
 }
 
 exports.publicPostParser = (postDetail) => {
     const {image,description,comments,likes} = postDetail;
     return {
-        image,description,comments,likes
+        image,description,
+        comments: comments.length,
+        likes : likes.length
     }
 }
