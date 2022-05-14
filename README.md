@@ -1,4 +1,4 @@
-## Dont use this yet, still experimental !!!
-### To do
-- sync it with cloudinary
-- write image handler middleware
+## propper readme will be added yet
+<samp>
+backend for synchronize-media-app
+</samp>
