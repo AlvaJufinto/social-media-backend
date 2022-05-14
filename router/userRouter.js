@@ -6,6 +6,6 @@ const multerMidlldeware = require("../middleware/multerMiddleware");
 
 router.get("/me", authMiddleware.authenticated, userController.me);
 router.post("/addpost",authMiddleware.authenticated,multerMidlldeware.uploadHandler ,userController.addPost);
-router.delete("/deletepost/:postId", authMiddleware.authenticated, authMiddleware.authorized, userController.deletepost);
+router.delete("/deletepost/:postId", authMiddleware.authenticated, authMiddleware.authorized, multerMidlldeware.deleteHandler, userController.deletepost);
 
 module.exports = router;
