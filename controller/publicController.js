@@ -86,3 +86,44 @@ exports.getUser = async (req,res) => {
         return res.status(errorState.code).json(errorState.errorData);
     }
 }
+
+exports.perks = async (req,res) => {
+    try{
+        const {rPerks,username} = req.params;
+        const user = await UserModel.findOne({username : username});
+
+        if(user){
+            switch(rPerks){
+                case "followers":
+                    const userFollowers = await UserModel.find({_id : {$in : user.followers}});
+                    return res.status(200).json({
+                        ok : true,
+                        data : userFollowers.map((v)=>{
+                            return publicUserParser(v)
+                        })
+                    })
+                case "followings":
+                    const userFollowings = await UserModel.find({_id : {$in : user.followings}});
+                    return res.status(200).json({
+                        ok : true,
+                        data : userFollowings.map((v)=>{
+                            return publicUserParser(v)
+                        })
+                    })
+                default :
+                    return res.status(403).json({
+                        ok : false,
+                        message : "only followings and followers"
+                    })
+            }
+        }
+
+        throw({
+            name : "UNF"
+        })
+
+    }catch(e){
+        const errorState = errorHandler(e);
+        return res.status(errorState.code).json(errorState.errorData);
+    }
+}
