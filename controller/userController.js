@@ -2,13 +2,16 @@ const CommentModel = require("../model/Comment.model");
 const DetailModel = require("../model/Detail.model");
 const PostModel = require("../model/Post.model");
 const UserModel = require("../model/User.model");
-const {errorHandler} = require("../utils/utils");
+const {errorHandler,publicUserParser} = require("../utils/utils");
 
 exports.me = async (req,res) => {
     try{
         const {uid} = req.uid;
         const userData = await UserModel.findById(uid);
-        const userDetail = await DetailModel.findById(userData.detail)
+        const userDetail = await DetailModel.findById(userData.detail);
+        const userFollowings = await UserModel.find({_id : {$in : userData.followings.slice(0,5)}});
+        const userFollowers = await UserModel.find({_id : {$in : userData.followers.slice(0,5)}});
+
         return res.status(200).json({
             ok : true,
             message : "data fetched",
@@ -18,8 +21,12 @@ exports.me = async (req,res) => {
                 fullname : userData.fullname,
                 email : userData.email,
                 detail : userDetail,
-                followers : userData.followers,
-                followings : userData.followings,
+                followers : userFollowers.map((v)=>{
+                    return publicUserParser(v)
+                }),
+                followings : userFollowings.map((v)=>{
+                    return publicUserParser(v)
+                }),
             }
         })
     }catch(e){
