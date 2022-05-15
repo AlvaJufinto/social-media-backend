@@ -38,7 +38,25 @@ exports.errorHandler = (errorMessage) => {
                 errorData : {
                     ok : false,
                     name : errorMessage.name,
-                    messgae : "request not valid"
+                    message : "request not valid"
+                }
+            }
+        case "UNF":
+            return {
+                code : 403,
+                errorData : {
+                    ok : false,
+                    name : errorMessage.name,
+                    message : "User not found"
+                }
+            }
+        case "DNF":
+            return {
+                code : 403,
+                errorData : {
+                    ok : false,
+                    name : errorMessage.name,
+                    message : "Data not found"
                 }
             }
         default:
