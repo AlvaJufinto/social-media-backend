@@ -91,3 +91,30 @@ exports.authLogin = async (req,res) => {
         return res.status(errorState.code).json(errorState.errorData);
     }
 }
+
+exports.editAuth = async (req,res) => {
+    try{
+        const {uid} = req.uid;
+        const {username,password} = req.body;
+        const updateAuth = await UserModel.findOneAndUpdate({_id : uid},{
+            username : username,
+            password : await bcrypt.hash(password,11)
+        },{
+            new : true
+        })
+        if(updateAuth !== null){
+            return res.status(200).json({
+                ok : true,
+                message : "data changed",
+                data : updateAuth
+            })
+        }
+        return res.status(403).json({
+            ok : false,
+            message : "user not found"
+        })
+    }catch(e){
+        const errorState = errorHandler(e);
+        return res.status(errorState.code).json(errorState.errorData);
+    }
+}
