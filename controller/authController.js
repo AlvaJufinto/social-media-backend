@@ -109,9 +109,9 @@ exports.editAuth = async (req,res) => {
                 data : updateAuth
             })
         }
-        return res.status(403).json({
-            ok : false,
-            message : "user not found"
+
+        throw({
+            name : "UNF"
         })
     }catch(e){
         const errorState = errorHandler(e);

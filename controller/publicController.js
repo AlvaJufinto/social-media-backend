@@ -36,10 +36,8 @@ exports.getPost = async (req,res) => {
                 }
             })
         }
-        return res.status(401).json({
-            ok : false,
-            message : "data not found",
-            data : []
+        throw({
+            name : "DNF"
         })
     }catch(e){
         const errorState = errorHandler(e);
@@ -77,10 +75,10 @@ exports.getUser = async (req,res) => {
                 }
             })
         }
-        return res.status(401).json({
-            ok : true,
-            message : "data not found"
-        });
+
+        throw({
+            name : "DNF"
+        })
     }catch(e){
         const errorState = errorHandler(e);
         return res.status(errorState.code).json(errorState.errorData);
