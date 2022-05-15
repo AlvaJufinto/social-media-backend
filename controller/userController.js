@@ -11,6 +11,7 @@ exports.me = async (req,res) => {
         const userDetail = await DetailModel.findById(userData.detail);
         const userFollowings = await UserModel.find({_id : {$in : userData.followings.slice(0,5)}});
         const userFollowers = await UserModel.find({_id : {$in : userData.followers.slice(0,5)}});
+        const userPosts = await PostModel.find({_id : {$in : userData.post}})
 
         return res.status(200).json({
             ok : true,
@@ -21,6 +22,7 @@ exports.me = async (req,res) => {
                 fullname : userData.fullname,
                 email : userData.email,
                 detail : userDetail,
+                posts : userPosts,
                 followers : userFollowers.map((v)=>{
                     return publicUserParser(v)
                 }),
