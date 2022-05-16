@@ -5,17 +5,17 @@ const CommentModel = Schema({
     postID : {
         type : mongoose.Types.ObjectId,
         ref : "post",
-        required : true
+        required : [true,"Field needs to be filled"]
     },
     belongsto : {
         type : mongoose.Types.ObjectId,
         ref : "user",
-        required : true
+        required : [true,"Field needs to be filled"]
     },
     comment : {
-        type : String,
-        maxLength : 255,
-        required : true
+        type : [String, "must be a string"],
+        maxLength : [255,"Maximum length is only 255"],
+        required : [true,"Field needs to be filled"]
     }
 })
 

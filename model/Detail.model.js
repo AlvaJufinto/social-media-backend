@@ -7,16 +7,16 @@ const DetailSchema = Schema({
         ref : "User"
     },
     from : {
-        type : String
+        type : [String, "must be a string"]
     },
     work : {
-        type : String
+        type : [String, "must be a string"]
     },
     relationship : {
-        type : String
+        type : [String, "must be a string"]
     },
     website : {
-        type : String
+        type : [String, "must be a string"]
     }
 })
 
