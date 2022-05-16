@@ -3,12 +3,14 @@ exports.errorHandler = (errorMessage) => {
 
     switch(errorMessage?.name){
         case "ValidationError":
+            const validatorKeys = Object.keys(errorMessage.errors) || []
+
             return {
                 code : 403,
                 errorData : {
                     ok : false,
                     name : errorMessage.name,
-                    message : errorMessage?.message || "validation error"
+                    message : `${errorMessage?._message || "validation error"} in ${validatorKeys.join(",")}`
                 }
             }
         case "MongoServerError":
