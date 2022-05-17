@@ -2,8 +2,10 @@ const CommentModel = require("../model/Comment.model");
 const DetailModel = require("../model/Detail.model");
 const PostModel = require("../model/Post.model");
 const UserModel = require("../model/User.model");
+const cloudinary = require("../utils/cloudinaryConfig");
 const {errorHandler,publicUserParser} = require("../utils/utils");
 
+// BEGIN USER-RELATED-ROUTE
 exports.me = async (req,res) => {
     try{
         const {uid} = req.uid;
@@ -36,7 +38,38 @@ exports.me = async (req,res) => {
         return res.status(errorState.code).json(errorState.errorData);
     }
 }
+exports.editDetail = async (req,res) => {
+    try{
+        const {uid} = req.uid;
+        const {from,work,relationship,website} = req.body;
+        const userDetail = await DetailModel.findOneAndUpdate({belongsto : uid},{
+            from : from,
+            work : work,
+            relationship : relationship,
+            website : website
+        },{
+            runValidators : true,
+            new : true
+        });
 
+        return res.status(200).json({
+            ok : true,
+            message : "data changed",
+            data : userDetail
+        })
+
+    }catch(e){
+        const errorState = errorHandler(e);
+        return res.status(errorState.code).json(errorState.errorData);
+    }
+
+
+}
+// END USER-RELATED-ROUTE
+
+
+
+// BEGIN POST-RELATED-ROUTE
 exports.addPost = async (req,res) => {
     try{
         const {uid} = req.uid;
@@ -97,3 +130,4 @@ exports.deletepost = async (req,res) => {
         return res.status(error.code).json(error.errorData);
     }
 }
+// END POST-RELATED-ROUTE
