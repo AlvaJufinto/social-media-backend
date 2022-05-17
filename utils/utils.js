@@ -89,3 +89,10 @@ exports.publicPostParser = (postDetail) => {
         likes : likes.length
     }
 }
+
+exports.detailParser = (detail) => {
+    const {from,work,relationship,website} = detail
+    return {
+        from,work,relationship,website
+    }
+}

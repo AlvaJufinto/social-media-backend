@@ -2,8 +2,7 @@ const CommentModel = require("../model/Comment.model");
 const DetailModel = require("../model/Detail.model");
 const PostModel = require("../model/Post.model");
 const UserModel = require("../model/User.model");
-const cloudinary = require("../utils/cloudinaryConfig");
-const {errorHandler,publicUserParser} = require("../utils/utils");
+const {errorHandler,publicUserParser,detailParser} = require("../utils/utils");
 
 // BEGIN USER-RELATED-ROUTE
 exports.me = async (req,res) => {
@@ -23,7 +22,7 @@ exports.me = async (req,res) => {
                 username : userData.username,
                 fullname : userData.fullname,
                 email : userData.email,
-                detail : userDetail,
+                detail : detailParser(userDetail),
                 posts : userPosts,
                 followers : userFollowers.map((v)=>{
                     return publicUserParser(v)
@@ -55,7 +54,7 @@ exports.editDetail = async (req,res) => {
         return res.status(200).json({
             ok : true,
             message : "data changed",
-            data : userDetail
+            data : detailParser(userDetail)
         })
 
     }catch(e){

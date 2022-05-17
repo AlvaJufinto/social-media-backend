@@ -3,7 +3,7 @@ const CommentModel = require("../model/Comment.model");
 const DetailModel = require("../model/Detail.model");
 const PostModel = require("../model/Post.model");
 const UserModel = require("../model/User.model");
-const {errorHandler,publicUserParser,publicPostParser} = require("../utils/utils");
+const {errorHandler,publicUserParser,publicPostParser,detailParser} = require("../utils/utils");
 
 exports.getPost = async (req,res) => {
     try{
@@ -64,7 +64,7 @@ exports.getUser = async (req,res) => {
                     username : user.username,
                     fullname : user.fullname,
                     email : user.email,
-                    detail : userDetail,
+                    detail : detailParser(userDetail),
                     posts : userPosts,
                     followers : userFollowers.map((v)=>{
                         return publicUserParser(v)
