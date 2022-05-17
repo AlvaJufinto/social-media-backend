@@ -5,22 +5,22 @@ require("dotenv").config();
 
 const UserModel = Schema({
     username : {
-        type : [String, "must be a string"],
+        type : String,
         required : [true,"Field needs to be filled"],
         unique : [true, "Username must unique"],
         validate : /^\w+$/
     },
     password : {
-        type : [String, "must be a string"],
+        type : String,
         required : [true,"Field needs to be filled"],
         minLength : 8
     },
     fullname : {
-        type : [String, "must be a string"],
+        type : String,
         required : [true,"Field needs to be filled"],
     },
     email : {
-        type : [String, "must be a string"],
+        type : String,
         required : [true,"Field needs to be filled"],
         unique : [true, "email must unique"],
         validate : /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
@@ -38,24 +38,24 @@ const UserModel = Schema({
     ],
     profilePict : {
         imageUrl : {
-            type : [String, "must be a string"],
+            type : String,
             required : [true,"Field needs to be filled"],
             default : "zamndaniel"
         },
         imageID : {
-            type : [String, "must be a string"],
+            type : String,
             required : [true,"Field needs to be filled"],
             default : "zamndaniel"
         }
     },
     backgroundPict : {
         imageUrl : {
-            type : [String, "must be a string"],
+            type : String,
             required : true,
             default : "zamndaniel"
         },
         imageID : {
-            type : [String, "must be a string"],
+            type : String,
             required : true,
             default : "zamndaniel"
         }

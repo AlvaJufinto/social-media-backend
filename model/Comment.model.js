@@ -13,7 +13,7 @@ const CommentModel = Schema({
         required : [true,"Field needs to be filled"]
     },
     comment : {
-        type : [String, "must be a string"],
+        type : String,
         maxLength : [255,"Maximum length is only 255"],
         required : [true,"Field needs to be filled"]
     }

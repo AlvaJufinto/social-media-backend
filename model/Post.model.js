@@ -9,14 +9,14 @@ const PostModel = Schema({
     },
     image : {
         imageUrl : {
-            type : [String, "must be a string"],
+            type : String,
         },
         imageID : {
-            type : [String, "must be a string"],
+            type : String,
         }
     },
     description : {
-        type : [String, "must be a string"],
+        type : String,
         maxLength : [250, "maximal length is only 250 char"]
     },
     comments : [
