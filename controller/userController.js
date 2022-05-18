@@ -5,7 +5,7 @@ const {errorHandler} = require("../utils/utils");
 
 exports.me = async (req,res) => {
     try{
-        const {uid} = req.uid;
+        const {uid} = req.uid;  
         const userData = await UserModel.findById(uid);
         const userDetail = await DetailModel.findById(userData.detail)
         return res.status(200).json({

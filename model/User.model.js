@@ -82,7 +82,7 @@ UserModel.methods = {
             },process.env.SM_PRIVATE_KEY,{
                 "expiresIn" : "7d"
             })
-
+            
             return smtoken
         }catch(e){
             return false;
