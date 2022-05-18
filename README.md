@@ -1,1 +1,4 @@
-## Dont use this yet, still experimental !!!
+## propper readme will be added soon
+<samp>
+backend for synchronize-media-app
+</samp>

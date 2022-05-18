@@ -61,9 +61,8 @@ exports.authorized = async (req,res,next) => {
                 message : "Access Denied"
             })
         }
-        return res.status(401).json({
-            ok : false,
-            message : "data not found"
+        throw({
+            name : "DNF"
         })
     }catch(e){
         const errorState = errorHandler(e);
