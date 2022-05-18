@@ -4,7 +4,8 @@
   "description": "express based server for synchronize social media",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "node index.js",
+    "serve": "nodemon server.js"
   },
   "keywords": [
     "express"
