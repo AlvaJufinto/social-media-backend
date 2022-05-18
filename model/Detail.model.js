@@ -7,16 +7,20 @@ const DetailSchema = Schema({
         ref : "User"
     },
     from : {
-        type : String
+        type : String,
+        default : ""
     },
     work : {
-        type : String
+        type : String,
+        default : ""
     },
     relationship : {
-        type : String
+        type : String,
+        default : ""
     },
     website : {
-        type : String
+        type : String,
+        default : ""
     }
 })
 

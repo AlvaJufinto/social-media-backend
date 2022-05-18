@@ -22,9 +22,8 @@ exports.likePost = async (req,res) => {
                 message : "Already liked"
             })
         }
-        return res.status(401).json({
-            ok : false,
-            message : "data not found"
+        throw({
+            name : "DNF"
         })
 
     }catch(e){
@@ -52,9 +51,8 @@ exports.unlikePost = async (req,res) => {
                 message : "post is not liked"
             })
         }
-        return res.status(401).json({
-            ok : false,
-            message : "data not found"
+        throw({
+            name : "DNF"
         })
 
     }catch(e){
@@ -91,9 +89,8 @@ exports.followUser = async (req,res) => {
                     message : "already followed"
                 })
             }
-            return res.status(401).json({
-                ok : false,
-                message : "data not found"
+            throw({
+                name : "DNF"
             })
         }
         return res.status(403).json({
@@ -134,9 +131,8 @@ exports.unfollowUser = async (req,res) => {
                     message : "already unfollowed"
                 })
             }
-            return res.status(401).json({
-                ok : false,
-                message : "data not found"
+            throw({
+                name : "DNF"
             })
         }
         return res.status(403).json({
@@ -173,9 +169,8 @@ exports.comment = async (req,res) => {
                 data : createComment
             })
         }
-        return res.status(403).json({
-            ok : true,
-            message : "data not found"
+        throw({
+            name : "DNF"
         })
     }catch(e){
         const errorState = errorHandler(e);

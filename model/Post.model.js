@@ -4,7 +4,7 @@ const {Schema,model} = mongoose
 const PostModel = Schema({
     belongsto : {
         type : mongoose.Types.ObjectId,
-        required : true,
+        required : [true,"Field needs to be filled"],
         ref : "User"
     },
     image : {
@@ -17,7 +17,7 @@ const PostModel = Schema({
     },
     description : {
         type : String,
-        maxLength : 250
+        maxLength : [250, "maximal length is only 250 char"]
     },
     comments : [
         {

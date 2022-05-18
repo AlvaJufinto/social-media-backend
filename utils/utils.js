@@ -3,12 +3,14 @@ exports.errorHandler = (errorMessage) => {
 
     switch(errorMessage?.name){
         case "ValidationError":
+            const validatorKeys = Object.keys(errorMessage.errors) || []
+
             return {
                 code : 403,
                 errorData : {
                     ok : false,
                     name : errorMessage.name,
-                    message : errorMessage?.message || "validation error"
+                    message : `${errorMessage?._message || "validation error"} in ${validatorKeys.join(",")}`
                 }
             }
         case "MongoServerError":
@@ -38,7 +40,25 @@ exports.errorHandler = (errorMessage) => {
                 errorData : {
                     ok : false,
                     name : errorMessage.name,
-                    messgae : "request not valid"
+                    message : "request not valid"
+                }
+            }
+        case "UNF":
+            return {
+                code : 403,
+                errorData : {
+                    ok : false,
+                    name : errorMessage.name,
+                    message : "User not found"
+                }
+            }
+        case "DNF":
+            return {
+                code : 403,
+                errorData : {
+                    ok : false,
+                    name : errorMessage.name,
+                    message : "Data not found"
                 }
             }
         default:
@@ -67,5 +87,12 @@ exports.publicPostParser = (postDetail) => {
         image,description,
         comments: comments.length,
         likes : likes.length
+    }
+}
+
+exports.detailParser = (detail) => {
+    const {from,work,relationship,website} = detail
+    return {
+        from,work,relationship,website
     }
 }

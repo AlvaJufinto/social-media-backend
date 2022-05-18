@@ -7,7 +7,8 @@ const UserModel = Schema({
     username : {
         type : String,
         required : [true,"Field needs to be filled"],
-        unique : [true, "Username must unique"]
+        unique : [true, "Username must unique"],
+        validate : /^\w+$/
     },
     password : {
         type : String,
@@ -21,7 +22,8 @@ const UserModel = Schema({
     email : {
         type : String,
         required : [true,"Field needs to be filled"],
-        unique : [true, "email must unique"]
+        unique : [true, "email must unique"],
+        validate : /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     },
     detail : {
         type : mongoose.Types.ObjectId,
@@ -37,12 +39,12 @@ const UserModel = Schema({
     profilePict : {
         imageUrl : {
             type : String,
-            required : true,
+            required : [true,"Field needs to be filled"],
             default : "zamndaniel"
         },
         imageID : {
             type : String,
-            required : true,
+            required : [true,"Field needs to be filled"],
             default : "zamndaniel"
         }
     },
