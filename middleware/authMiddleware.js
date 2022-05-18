@@ -6,7 +6,7 @@ require("dotenv").config();
 exports.authenticated = async (req,res,next) => {
     try{
         const {authorization} = req.headers;
-        
+
         if(authorization){
             const authToken = authorization.split(" ")[1];
             return await jwt.verify(authToken,process.env.SM_PRIVATE_KEY,function(err,decoded){
