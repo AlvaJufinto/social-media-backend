@@ -25,6 +25,10 @@ const UserModel = new Schema({
         unique : [true, "email must unique"],
         validate : /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     },
+    description : {
+        type: String, 
+        required: false,
+    },
     detail : {
         type : mongoose.Types.ObjectId,
         ref : "detail",

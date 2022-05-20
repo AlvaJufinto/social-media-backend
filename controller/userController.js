@@ -40,8 +40,9 @@ exports.me = async (req,res) => {
 exports.editDetail = async (req,res) => {
     try{
         const {uid} = req.uid;
-        const {from,work,relationship,website} = req.body;
+        const {description, from, work, relationship, website} = req.body;
         const userDetail = await DetailModel.findOneAndUpdate({belongsto : uid},{
+            description: description,
             from : from,
             work : work,
             relationship : relationship,
