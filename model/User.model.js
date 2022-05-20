@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const {Schema,model} = mongoose;
 require("dotenv").config();
 
-const UserModel = Schema({
+const UserModel = new Schema({
     username : {
         type : String,
         required : [true,"Field needs to be filled"],
@@ -42,26 +42,18 @@ const UserModel = Schema({
     ],
     profilePict : {
         imageUrl : {
-            type : String,
-            required : [true,"Field needs to be filled"],
-            default : "zamndaniel"
+            type : String
         },
         imageID : {
-            type : String,
-            required : [true,"Field needs to be filled"],
-            default : "zamndaniel"
+            type : String
         }
     },
     backgroundPict : {
         imageUrl : {
-            type : String,
-            required : true,
-            default : "zamndaniel"
+            type : String
         },
         imageID : {
-            type : String,
-            required : true,
-            default : "zamndaniel"
+            type : String
         }
     },
     followings : [

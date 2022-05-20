@@ -82,11 +82,13 @@ exports.publicUserParser = (userDetail) => {
 }
 
 exports.publicPostParser = (postDetail) => {
-    const {image,description,comments,likes} = postDetail;
+    const {image,description,comments,likes,_id,date} = postDetail;
     return {
+        postId : _id,
         image,description,
         comments: comments.length,
-        likes : likes.length
+        likes : likes.length,
+        date
     }
 }
 
@@ -95,4 +97,13 @@ exports.detailParser = (detail) => {
     return {
         from,work,relationship,website
     }
+}
+
+exports.userToSet = (userList) => {
+    let userSet = {};
+
+    userList.map((val)=>{
+        userSet[val._id] = this.publicUserParser(val)
+    })
+    return userSet;
 }

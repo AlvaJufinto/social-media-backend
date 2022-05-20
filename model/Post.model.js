@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const {Schema,model} = mongoose
 
 const PostModel = Schema({
+    date : {
+        type : Date,
+        required : true
+    },
     belongsto : {
         type : mongoose.Types.ObjectId,
         required : [true,"Field needs to be filled"],
