@@ -2,7 +2,7 @@ const CommentModel = require("../model/Comment.model");
 const DetailModel = require("../model/Detail.model");
 const PostModel = require("../model/Post.model");
 const UserModel = require("../model/User.model");
-const {errorHandler,publicUserParser,detailParser} = require("../utils/utils");
+const {errorHandler,publicUserParser,detailParser,userToSet, publicPostParser} = require("../utils/utils");
 
 // BEGIN USER-RELATED-ROUTE
 exports.me = async (req,res) => {
@@ -64,6 +64,36 @@ exports.editDetail = async (req,res) => {
     }
 
 
+}
+
+exports.feeds = async (req,res) => {
+    try{
+        const {uid} = req.uid;
+        const user = await UserModel.findById(uid);
+        if(user){
+            const userFollowingList = user.followings;
+            const postBelongsTo = userToSet(await UserModel.find({_id : {$in : userFollowingList}}));
+            const userFeed = await PostModel.find({belongsto : {$in : userFollowingList}})
+
+            return res.status(200).json({
+                ok : true,
+                message : "data fetched",
+                data : userFeed.map((val)=>{
+                    return {
+                        belongsto : postBelongsTo[val.belongsto.toString()],
+                        post : publicPostParser(val)
+                    }
+                })
+            });
+        }
+        throw({
+            name : "UNF"
+        })
+
+    }catch(e){
+        const errorState = errorHandler(e);
+        return res.status(errorState.code).json(errorState.errorData);
+    }
 }
 // END USER-RELATED-ROUTE
 
