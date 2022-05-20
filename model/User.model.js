@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const {Schema,model} = mongoose;
 require("dotenv").config();
 
-const UserModel = Schema({
+const UserModel = new Schema({
     username : {
         type : String,
         required : [true,"Field needs to be filled"],
