@@ -106,6 +106,7 @@ exports.addPost = async (req,res) => {
         const {description} = req.body;
         const {public_id,secure_url} = req.file || {};
         const createPost = PostModel({
+            date : Date.now(),
             belongsto : uid,
             image : {
                 imageUrl : secure_url,
