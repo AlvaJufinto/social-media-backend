@@ -82,8 +82,9 @@ exports.publicUserParser = (userDetail) => {
 }
 
 exports.publicPostParser = (postDetail) => {
-    const {image,description,comments,likes} = postDetail;
+    const {image,description,comments,likes,_id} = postDetail;
     return {
+        postId : _id,
         image,description,
         comments: comments.length,
         likes : likes.length
