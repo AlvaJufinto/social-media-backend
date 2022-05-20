@@ -96,3 +96,12 @@ exports.detailParser = (detail) => {
         from,work,relationship,website
     }
 }
+
+exports.userToSet = (userList) => {
+    let userSet = {};
+
+    userList.map((val)=>{
+        userSet[val._id] = this.publicUserParser(val)
+    })
+    return userSet;
+}
