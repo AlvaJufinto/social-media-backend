@@ -122,11 +122,13 @@ exports.addPost = async (req,res) => {
         await UserModel.updateOne({_id : uid},{
             $push : {post : [createPost._id]}
         });
-
         return res.status(200).json({
             ok : true,
             message : "Data Added",
-            data : createPost
+            data : {
+                belongsto : publicUserParser(await UserModel.findById(uid)),
+                post : createPost
+            }
         })
 
     }catch(e){
