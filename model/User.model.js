@@ -42,26 +42,18 @@ const UserModel = new Schema({
     ],
     profilePict : {
         imageUrl : {
-            type : String,
-            required : [true,"Field needs to be filled"],
-            default : "zamndaniel"
+            type : String
         },
         imageID : {
-            type : String,
-            required : [true,"Field needs to be filled"],
-            default : "zamndaniel"
+            type : String
         }
     },
     backgroundPict : {
         imageUrl : {
-            type : String,
-            required : true,
-            default : "zamndaniel"
+            type : String
         },
         imageID : {
-            type : String,
-            required : true,
-            default : "zamndaniel"
+            type : String
         }
     },
     followings : [
