@@ -21,6 +21,7 @@ exports.me = async (req,res) => {
                 _id : userData._id,
                 username : userData.username,
                 fullname : userData.fullname,
+                description: userData.description,
                 email : userData.email,
                 detail : detailParser(userDetail),
                 posts : userPosts,
