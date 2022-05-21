@@ -24,7 +24,12 @@ exports.me = async (req,res) => {
                 description: userData.description,
                 email : userData.email,
                 detail : detailParser(userDetail),
-                posts : userPosts,
+                posts : userPosts.map((val)=>{
+                    return {
+                        belongsto : publicUserParser(userData),
+                        post : val
+                    }
+                }),
                 followers : userFollowers.map((v)=>{
                     return publicUserParser(v)
                 }),
