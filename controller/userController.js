@@ -2,6 +2,7 @@ const CommentModel = require("../model/Comment.model");
 const DetailModel = require("../model/Detail.model");
 const PostModel = require("../model/Post.model");
 const UserModel = require("../model/User.model");
+const cloudinary = require("../utils/cloudinaryConfig");
 const {errorHandler,publicUserParser,detailParser,userToSet, publicPostParser} = require("../utils/utils");
 
 // BEGIN USER-RELATED-ROUTE
@@ -47,21 +48,15 @@ exports.editDetail = async (req,res) => {
     try{
         const {uid} = req.uid;
         const {description, from, work, relationship, website} = req.body;
-        const userDetail = await DetailModel.findOneAndUpdate({belongsto : uid},{
-            description: description,
-            from : from,
-            work : work,
-            relationship : relationship,
-            website : website
-        },{
-            runValidators : true,
-            new : true
-        });
+        const {public_id,secure_url} = req.file || {};
 
-        return res.status(200).json({
-            ok : true,
-            message : "data changed",
-            data : detailParser(userDetail)
+        const userDetail = await DetailModel.findOne({belongsto : uid});
+        console.log(userDetail)
+        userDetail.backroundPict = undefined;
+        await userDetail.save();
+
+        throw({
+            name : "DNF"
         })
 
     }catch(e){
