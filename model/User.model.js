@@ -48,14 +48,6 @@ const UserModel = new Schema({
             type : String
         }
     },
-    backgroundPict : {
-        imageUrl : {
-            type : String
-        },
-        imageID : {
-            type : String
-        }
-    },
     followings : [
         {
             type : mongoose.Types.ObjectId,
