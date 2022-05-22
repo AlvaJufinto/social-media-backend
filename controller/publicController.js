@@ -65,7 +65,12 @@ exports.getUser = async (req,res) => {
                     fullname : user.fullname,
                     email : user.email,
                     detail : detailParser(userDetail),
-                    posts : userPosts,
+                    posts : userPosts.map((val)=>{
+                        return {
+                            belongsto : publicUserParser(user),
+                            post : val
+                        }
+                    }),
                     followers : userFollowers.map((v)=>{
                         return publicUserParser(v)
                     }),
