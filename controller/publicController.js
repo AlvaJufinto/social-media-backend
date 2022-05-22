@@ -45,6 +45,30 @@ exports.getPost = async (req,res) => {
     }
 }
 
+exports.getPostLikes = async (req,res) => {
+    try{
+        const {postId} = req.params;
+        const requestedPost = await PostModel.findById(postId);
+        if(requestedPost){
+            const {likes} = requestedPost;
+            const userFromLikes = await UserModel.find({_id : {$in : likes}});
+            return res.status(200).json({
+                ok : true,
+                message : "data fetched",
+                data : userFromLikes.map((v)=>{
+                    return publicUserParser(v);
+                })
+            })
+        }
+        throw({
+            name : "DNF"
+        })
+    }catch(e){
+        const errorState = errorHandler(e);
+        return res.status(errorState.code).json(errorState.errorData);
+    }
+}
+
 exports.getUser = async (req,res) => {
     try{
         const {username} = req.params;
