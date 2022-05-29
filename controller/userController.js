@@ -48,13 +48,50 @@ exports.editDetail = async (req,res) => {
     try{
         const {uid} = req.uid;
         const {description, from, work, relationship, website} = req.body;
+        const {deletePict} = req.query;
         const {public_id,secure_url} = req.file || {};
 
-        const userDetail = await DetailModel.findOne({belongsto : uid});
-        console.log(userDetail)
-        userDetail.backroundPict = undefined;
-        await userDetail.save();
+        const user = await DetailModel.findOne({belongsto : uid});
+        const {imageID,imageUrl} = user.backgroundPict || {};
 
+        if(user){
+            if(deletePict === "1" && !public_id && !secure_url){
+                if(imageID && imageUrl){
+                    await cloudinary.uploader.destroy(imageID);
+                }
+                user.backgroundPict = undefined;
+            }
+            if(public_id && secure_url){
+                if(imageID && imageUrl){
+                    await cloudinary.uploader.destroy(imageID);
+                }
+                user.backgroundPict = {
+                    imageUrl : secure_url,
+                    imageID : public_id
+                }
+            }
+
+            // hard coded till i found a better implementation LMAO
+            user.from = from ? from : user.from;
+            user.description = description ? description : user.description;
+            user.work = work ? work : user.work;
+            user.relationship = relationship ? relationship : user.relationship;
+            user.website = website ? website : user.website;
+
+            await user.save();
+            return res.status(200).json({
+                ok : true,
+                message : "detail updated",
+                data : {
+                    description : user.description,
+                    from : user.from,
+                    work : user.work,
+                    relationship : user.relationship,
+                    website : user.website,
+                    backgroundPict : user.backgroundPict
+                }
+            })
+        }
         throw({
             name : "DNF"
         })
