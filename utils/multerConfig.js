@@ -11,12 +11,11 @@ const upload = multer({
             if(extension == ".png" || extension == ".jpg" || extension == ".jpeg"){
                 const randomize = Math.floor(Math.random()  * Date.now() );
                 file.originalname = `${randomize}-${file.originalname}`;
-                
+
                 return cb(null, true);
             }
-            return cb(new Error("only images are allowed"));
+            return cb(new Error("OIA"))
         }catch(e){
-            console.log(e)
             return cb(new Error("Internal Error"))
         }
     },

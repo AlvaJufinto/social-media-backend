@@ -61,6 +61,35 @@ exports.errorHandler = (errorMessage) => {
                     message : "Data not found"
                 }
             }
+        case "Error":
+            switch(errorMessage.message){
+                case "OIA":
+                    return {
+                        code : 403,
+                        errorData : {
+                            ok : false,
+                            name : errorMessage.message,
+                            message : "Only Images are Allowed"
+                        }
+                    }
+                case "FTL":
+                    return {
+                        code : 403,
+                        errorData : {
+                            ok : false,
+                            name : errorMessage.message,
+                            message : "File too Large"
+                        }
+                    }
+                default:
+                    return {
+                        code : 501,
+                        errorData : {
+                            ok : false,
+                            message : "Internal Error"
+                        }
+                    }
+            }
         default:
             return {
                 code : 501,
