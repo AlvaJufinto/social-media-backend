@@ -104,6 +104,56 @@ exports.editDetail = async (req,res) => {
 
 }
 
+exports.editProfile = async (req,res) => {
+    try{
+        const {uid} = req.uid;
+        const {fullname,email,description} = req.body;
+        const {deletePict} = req.query;
+        const {public_id,secure_url} = req.file || {};
+
+        const user = await UserModel.findById(uid);
+        const {imageID,imageUrl} = user.profilePict || {};
+
+        if(user){
+            if(deletePict === "1" && !public_id && !secure_url){
+                if(imageID && imageUrl){
+                    await cloudinary.uploader.destroy(imageID);
+                }
+                user.profilePict = undefined;
+            }
+            if(public_id && secure_url){
+                if(imageID && imageUrl){
+                    await cloudinary.uploader.destroy(imageID);
+                }
+                user.profilePict = {
+                    imageUrl : secure_url,
+                    imageID : public_id
+                }
+            }
+
+            user.fullname = fullname ? fullname : user.fullname;
+            user.email = email ? email : user.email;
+            user.description = description ? description : user.description;
+            await user.save();
+
+            return res.status(200).json({
+                ok : true,
+                message : "data changed",
+                data : {
+                    fullname : user.fullname,
+                    email : user.email,
+                    description : user.description,
+                    profilePict : user.profilePict
+                }
+            })
+        }
+
+    }catch(e){
+        const errorState = errorHandler(e);
+        return res.status(errorState.code).json(errorState.errorData);
+    }
+}
+
 exports.feeds = async (req,res) => {
     try{
         const {uid} = req.uid;
